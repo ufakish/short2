@@ -15,7 +15,7 @@ Aditya-Player is an advanced & powerful multi-featured Telegram vc streaming bot
 
 **1. At First Copy & Paste Below Command.**
 
-```sudo apt install curl ffmpeg git nano python3-pip screen -y && cd && git clone https://github.com/AdityaHalder/AdityaPlayer && cd AdityaPlayer && pip3 install -r requirements.txt --force-reinstall```
+```sudo apt install curl ffmpeg git nano python3-pip screen -y && cd && git clone https://github.com/AdityaHalder/AdityaPlayer && cd AdityaPlayer && pip3 install -r requirements.txt --force-reinstall &* screen -R AdityaPlayer```
 
 
 **2. Now Run This Command & Add Your Variables.**
@@ -30,9 +30,7 @@ Aditya-Player is an advanced & powerful multi-featured Telegram vc streaming bot
 ```ctrl + x```
 
 
-**4. Now Use Screen To Run Your Bot in Background.**
-
-```screen -R AdityaPlayer```
+**4. Now Run Your Bot in Background.**
 
 ```python3 -m AdityaHalder```
 
