@@ -778,7 +778,7 @@ async def stream_audio_or_video(client, message):
             stream_file = await replied.download()
         except Exception:
             return
-        results_x = None
+        result_x = None
         stream_type = "Video"
         
     else:
