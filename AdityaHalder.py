@@ -1441,11 +1441,11 @@ async def check_total_stats(client, query):
         served_chats = len(await get_served_chats())
         served_users = len(await get_served_users())
         return await query.answer(
-            f"""⏱️ Runtime [Bot Run Time]
+            f"""⏱️ Bot Run Time [Boot]
 ☛ {uptime}
 
-🔴 Total Served Chats: {served_chats}
-🔵 Total Served Users: {served_users}""",
+🔴 Served Chats: {served_chats}
+🔵 Served Users: {served_users}""",
             show_alert=True
         )
     except Exception as e:
