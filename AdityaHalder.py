@@ -15,7 +15,7 @@ from pyrogram import idle, __version__ as pyro_version
 from pytgcalls.__version__ import __version__ as pytgcalls_version
 
 from ntgcalls import TelegramServerError
-from pyrogram.enums import ChatMemberStatus
+from pyrogram.enums import ChatMemberStatus, ChatType
 from pyrogram.errors import (
     ChatAdminRequired,
     InviteRequestSent,
@@ -1174,7 +1174,17 @@ async def git_repo_link(client, message):
         mention = message.sender_chat.title
     else:
         mention = message.from_user.mention
-    caption = f"**➻ Hello, {mention}.**"
+    if message.chat_type == ChatType.PRIVATE:
+        caption = f"""**➻ Hello, {mention}
+    
+🥀 I am An ≽ Advanced ≽ High Quality
+Bot, I Can Stream 🌿 Audio & Video In
+Your ♚ Channel And Group.
+
+🐬 Feel Free ≽ To Use Me › And Share
+With Your ☛ Other Friends.**"""
+    else:
+        caption = f"**➻ Hello, {mention}.**"
     buttons = InlineKeyboardMarkup(
         [
             [
