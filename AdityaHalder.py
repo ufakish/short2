@@ -6,7 +6,6 @@ from io import BytesIO
 from functools import partial
 from dotenv import load_dotenv
 from datetime import datetime
-from time import strftime, time
 from typing import Union, List, Pattern
 from logging.handlers import RotatingFileHandler
 
@@ -1271,7 +1270,7 @@ async def update_repo_latest(client, message):
         ],
     )
     for info in repo.iter_commits(f"HEAD..origin/aditya"):
-        updates += f"<b>➣ #{info.count()}: [{info.summary}]({REPO_}/commit/{info}) by -> {info.author}</b>\n\t\t\t\t<b>➥ Commited on:</b> {ordinal(int(datetime.fromtimestamp(info.committed_date).strftime('%d')))} {datetime.fromtimestamp(info.committed_date).strftime('%b')}, {datetime.fromtimestamp(info.committed_date).strftime('%Y')}\n\n"
+        updates += f"<b>➣ #{info.count()}: [{info.summary}]({REPO_}/commit/{info}) by -> {info.author}</b>\n\t\t\t\t<b>➥ Commited on:</b> {ordinal(int(datetime.fromtimestamp(info.committed_date).time.strftime('%d')))} {datetime.fromtimestamp(info.committed_date).time.strftime('%b')}, {datetime.fromtimestamp(info.committed_date).time.strftime('%Y')}\n\n"
     _update_response_ = "<b>A new update is available for the Bot!</b>\n\n➣ Pushing Updates Now</code>\n\n**<u>Updates:</u>**\n\n"
     _final_updates_ = _update_response_ + updates
     if len(_final_updates_) > 4096:
