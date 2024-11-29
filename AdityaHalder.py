@@ -27,6 +27,7 @@ from ntgcalls import TelegramServerError
 from pyrogram.enums import ChatMemberStatus, ChatType
 from pyrogram.errors import (
     ChatAdminRequired,
+    FloodWait,
     InviteRequestSent,
     UserAlreadyParticipant,
     UserNotParticipant,
