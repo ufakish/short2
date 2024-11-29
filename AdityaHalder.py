@@ -1174,7 +1174,7 @@ async def git_repo_link(client, message):
         mention = message.sender_chat.title
     else:
         mention = message.from_user.mention
-    caption = f"**➻ Hello, {mention}**"
+    caption = f"**➻ Hello, {mention}.**"
     buttons = InlineKeyboardMarkup(
         [
             [
