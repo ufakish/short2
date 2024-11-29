@@ -1,5 +1,6 @@
 import aiohttp, aiofiles, asyncio, base64, logging
-import os, platform, random, re, socket, sys, time, textwrap
+import os, platform, random, re, socket
+import sys, time, textwrap
 
 from os import getenv
 from io import BytesIO
