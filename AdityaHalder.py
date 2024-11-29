@@ -1244,7 +1244,7 @@ With Your ☛ Other Friends.**"""
 
 
 
-@bot.on_message(filters.command("update") & bot_owner_only)
+@bot.on_message(cdx("update") & bot_owner_only)
 async def update_repo_latest(client, message):
     response = await message.reply_text("Checking for available updates...")
     try:
