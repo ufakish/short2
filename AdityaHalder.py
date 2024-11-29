@@ -845,6 +845,7 @@ async def stream_audio_or_video(client, message):
     except Exception:
         pass
     chat_id = message.chat.id
+    await add_served_chat(chat_id)
     user = message.from_user if message.from_user else message.sender_chat
     replied = message.reply_to_message
     audio = (replied.audio or replied.voice) if replied else None
