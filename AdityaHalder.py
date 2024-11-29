@@ -324,11 +324,18 @@ async def add_served_user(user_id: int):
 # Callback & Message Queries
 
 
-@bot.on_message(cdx("start") & pyrofl.private)
+@bot.on_message(cdx(["start", "help"]) & pyrofl.private)
 async def start_message_private(client, message):
     user_id = message.from_user.id
     mention = message.from_user.mention
-    caption = f"""**➻ Hello, {mention}
+    await add_served_user(user_id)
+    if len(message.text.split()) > 1:
+        name = message.text.split(None, 1)[1]
+        if name[0:5] == "verify":
+            pass
+            
+    else:
+        caption = f"""**➻ Hello, {mention}
 
 🥀 I am An ≽ Advanced ≽ High Quality
 Bot, I Can Stream 🌿 Audio & Video In
@@ -340,41 +347,42 @@ My All Commands.
 
 💐 Feel Free ≽ To Use Me › And Share
 With Your ☛ Other Friends.**"""
-    buttons = InlineKeyboardMarkup(
-        [
+        buttons = InlineKeyboardMarkup(
             [
-                InlineKeyboardButton(
-                    text="🥀 Add Me In Your Chat ✨",
-                    url=f"https://t.me/{bot.me.username}?startgroup=true",
+                [
+                    InlineKeyboardButton(
+                        text="🥀 Add Me In Your Chat ✨",
+                        url=f"https://t.me/{bot.me.username}?startgroup=true",
+                    )
+                ],
+                [
+                    InlineKeyboardButton(
+                        text="🌺 Open Command List 🌷",
+                        callback_data="open_command_list",
+                    )
+                ],
+            ]
+        )
+        if START_IMAGE_URL:
+            try:
+                return await message.reply_photo(
+                    photo=START_IMAGE_URL, caption=caption, reply_markup=buttons
                 )
-            ],
-            [
-                InlineKeyboardButton(
-                    text="🌺 Open Command List 🌷",
-                    callback_data="open_command_list",
-                )
-            ],
-        ]
-    )
-    await add_served_user(user_id)
-    if START_IMAGE_URL:
-        try:
-            return await message.reply_photo(
-                photo=START_IMAGE_URL, caption=caption, reply_markup=buttons
-            )
-        except Exception as e:
-            LOGGER.info(f"🚫 Start Image Error: {e}")
+            except Exception as e:
+                LOGGER.info(f"🚫 Start Image Error: {e}")
+                try:
+                    return await message.reply_text(text=caption, reply_markup=buttons)
+                except Exception as e:
+                    LOGGER.info(f"🚫 Start Error: {e}")
+                    return
+        else:
             try:
                 return await message.reply_text(text=caption, reply_markup=buttons)
             except Exception as e:
                 LOGGER.info(f"🚫 Start Error: {e}")
                 return
-    else:
-        try:
-            return await message.reply_text(text=caption, reply_markup=buttons)
-        except Exception as e:
-            LOGGER.info(f"🚫 Start Error: {e}")
-            return
+
+
 
 
 @bot.on_callback_query(rgx("open_command_list"))
