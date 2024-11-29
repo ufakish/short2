@@ -1409,7 +1409,7 @@ async def check_bot_stats(client, message):
 async def check_total_stats(client, query):
     try:
         user_id = query.from_user.id
-        runtime = console.runtime
+        runtime = __start_time__
         boot_time = int(time.time() - runtime)
         uptime = get_readable_time((boot_time))
         served_chats = len(await get_served_chats())
