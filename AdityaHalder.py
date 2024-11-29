@@ -1276,6 +1276,15 @@ async def stream_end_handler(_, update: Update):
     return await change_stream(chat_id)
 
 
+@bot.on_message(cdx("ping") & ~pyrofl.bot)
+async def check_sping(client, message):
+    start = datetime.now()
+    end = datetime.now()
+    ms = (end - start).microseconds / 1000
+    m = await message.reply_text("**🤖 Ping...!!**")
+    await m.edit(f"**🤖 Pinged...!!\nLatency:** `{ms}` ms")
+
+
 @bot.on_message(cdx(["repo", "repository"]) & ~pyrofl.bot)
 async def git_repo_link(client, message):
     if message.sender_chat:
@@ -1361,6 +1370,12 @@ async def update_repo_latest(client, message):
     os.system(f"kill -9 {os.getpid()} && python3 -m AdityaHalder")
     sys.exit()
     return
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
