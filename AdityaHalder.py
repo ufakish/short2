@@ -1,12 +1,19 @@
 import aiohttp, aiofiles, asyncio, base64, logging
-import os, platform, random, re, sys, time, textwrap
+import os, platform, random, re, socket, sys, time, textwrap
 
 from os import getenv
 from io import BytesIO
+from functools import partial
 from dotenv import load_dotenv
+from datetime import datetime
+from time import strftime, time
 from typing import Union, List, Pattern
 from logging.handlers import RotatingFileHandler
 
+
+from git import Repo
+from git.exc import GitCommandError, InvalidGitRepositoryError
+ 
 from pyrogram import Client, filters as pyrofl
 from pytgcalls import PyTgCalls, filters as pytgfl
 
@@ -204,6 +211,32 @@ async def main():
     LOGGER.info("✅ Sucessfully Hosted Your Bot !!")
     LOGGER.info("✅ Now Do Visit: @AdityaServer !!")
     await idle()
+
+
+
+# Some Functions For Paste ...!!
+
+def _netcat(host, port, content):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((host, port))
+    s.sendall(content.encode())
+    s.shutdown(socket.SHUT_WR)
+    while True:
+        data = s.recv(4096).decode("utf-8").strip("\n\x00")
+        if not data:
+            break
+        return data
+    s.close()
+
+
+async def paste_queue(content):
+    loop = asyncio.get_running_loop()
+    link = await loop.run_in_executor(
+        None, partial(_netcat, "ezup.dev", 9999, content)
+    )
+    return link
+
+
 
 
 # Callback & Message Queries
