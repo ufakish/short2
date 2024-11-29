@@ -1168,20 +1168,13 @@ async def stream_end_handler(_, update: Update):
 
 
 
-@bot.on_message(cdx(["repo", "repository"]) & pyrofl.private)
+@bot.on_message(cdx(["repo", "repository"]) & ~pyrofl.bot)
 async def git_repo_link(client, message):
     if message.sender_chat:
         mention = message.sender_chat.title
     else:
         mention = message.from_user.mention
-    caption = f"""**➻ Hello, {mention}
-
-🥀 I am An ≽ Advanced ≽ High Quality
-Bot, I Can Stream 🌿 Audio & Video In
-Your ♚ Channel And Group.
-
-🐬 Feel Free ≽ To Use Me › And Share
-With Your ☛ Other Friends.**"""
+    caption = f"**➻ Hello, {mention}**"
     buttons = InlineKeyboardMarkup(
         [
             [
