@@ -1174,7 +1174,7 @@ async def git_repo_link(client, message):
         mention = message.sender_chat.title
     else:
         mention = message.from_user.mention
-    if message.chat_type == ChatType.PRIVATE:
+    if message.chat.type == ChatType.PRIVATE:
         caption = f"""**➻ Hello, {mention}
     
 🥀 I am An ≽ Advanced ≽ High Quality
