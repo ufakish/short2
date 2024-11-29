@@ -12,7 +12,7 @@ from logging.handlers import RotatingFileHandler
 
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError
- 
+
 from pyrogram import Client, filters as pyrofl
 from pytgcalls import PyTgCalls, filters as pytgfl
 
@@ -56,9 +56,7 @@ logging.basicConfig(
     level=logging.INFO,
     datefmt="%H:%M:%S",
     handlers=[
-        RotatingFileHandler(
-            "logs.txt", maxBytes=(1024 * 1024 * 5), backupCount=10
-        ),
+        RotatingFileHandler("logs.txt", maxBytes=(1024 * 1024 * 5), backupCount=10),
         logging.StreamHandler(),
     ],
 )
@@ -97,17 +95,20 @@ QUEUE = {}
 
 # Command & Callback Handlers
 
+
 def cdx(commands: Union[str, List[str]]):
     return pyrofl.command(commands, ["/", "!", "."])
+
 
 def cdz(commands: Union[str, List[str]]):
     return pyrofl.command(commands, ["", "/", "!", "."])
 
+
 def rgx(pattern: Union[str, Pattern]):
     return pyrofl.regex(pattern)
 
-bot_owner_only = pyrofl.user(OWNER_ID)
 
+bot_owner_only = pyrofl.user(OWNER_ID)
 
 
 # all clients
@@ -135,6 +136,7 @@ __start_time__ = time.time()
 
 
 # start and run
+
 
 async def main():
     LOGGER.info("🐬 Updating Directories ...")
@@ -167,8 +169,8 @@ async def main():
         LOGGER.info("❌ 'STRING_SESSION' - Not Found ‼️")
         sys.exit()
     # if not MONGO_DB_URL:
-        # LOGGER.info("'MONGO_DB_URL' - Not Found !!")
-        # sys.exit()
+    # LOGGER.info("'MONGO_DB_URL' - Not Found !!")
+    # sys.exit()
     LOGGER.info("✅ Required Variables Are Collected.")
     await asyncio.sleep(1)
     LOGGER.info("🌀 Starting All Clients ...")
@@ -179,9 +181,7 @@ async def main():
         sys.exit()
     if LOG_GROUP_ID != 0:
         try:
-            await bot.send_message(
-                LOG_GROUP_ID, "**🤖 Bot Started.**"
-            )
+            await bot.send_message(LOG_GROUP_ID, "**🤖 Bot Started.**")
         except Exception:
             pass
     LOGGER.info("✅ Bot Started.")
@@ -197,9 +197,7 @@ async def main():
         pass
     if LOG_GROUP_ID != 0:
         try:
-            await app.send_message(
-                LOG_GROUP_ID, "**🦋 Assistant Started.**"
-            )
+            await app.send_message(LOG_GROUP_ID, "**🦋 Assistant Started.**")
         except Exception:
             pass
     LOGGER.info("✅ Assistant Started.")
@@ -215,8 +213,8 @@ async def main():
     await idle()
 
 
-
 # Some Functions For Paste ...!!
+
 
 def _netcat(host, port, content):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -233,15 +231,12 @@ def _netcat(host, port, content):
 
 async def paste_queue(content):
     loop = asyncio.get_running_loop()
-    link = await loop.run_in_executor(
-        None, partial(_netcat, "ezup.dev", 9999, content)
-    )
+    link = await loop.run_in_executor(None, partial(_netcat, "ezup.dev", 9999, content))
     return link
 
 
-
-
 # Callback & Message Queries
+
 
 @bot.on_message(cdx("start") & pyrofl.private)
 async def start_message_private(client, message):
@@ -277,24 +272,18 @@ With Your ☛ Other Friends.**"""
     if START_IMAGE_URL:
         try:
             return await message.reply_photo(
-                photo=START_IMAGE_URL,
-                caption=caption,
-                reply_markup=buttons
+                photo=START_IMAGE_URL, caption=caption, reply_markup=buttons
             )
         except Exception as e:
             LOGGER.info(f"🚫 Start Image Error: {e}")
             try:
-                return await message.reply_text(
-                    text=caption, reply_markup=buttons
-                )
+                return await message.reply_text(text=caption, reply_markup=buttons)
             except Exception as e:
                 LOGGER.info(f"🚫 Start Error: {e}")
                 return
     else:
         try:
-            return await message.reply_text(
-                text=caption, reply_markup=buttons
-            )
+            return await message.reply_text(text=caption, reply_markup=buttons)
         except Exception as e:
             LOGGER.info(f"🚫 Start Error: {e}")
             return
@@ -325,15 +314,10 @@ Only in Channels/Groups."""
         ]
     )
     try:
-        return await query.edit_message_text(
-            text=caption, reply_markup=buttons
-        )
+        return await query.edit_message_text(text=caption, reply_markup=buttons)
     except Exception as e:
         LOGGER.info(f"🚫 Cmd Menu Error: {e}")
         return
-
-
-
 
 
 @bot.on_callback_query(rgx("back_to_home"))
@@ -368,15 +352,10 @@ With Your ☛ Other Friends.**"""
         ]
     )
     try:
-        return await query.edit_message_text(
-            text=caption, reply_markup=buttons
-        )
+        return await query.edit_message_text(text=caption, reply_markup=buttons)
     except Exception as e:
         LOGGER.info(f"🚫 Back Menu Error: {e}")
         return
-
-
-
 
 
 @bot.on_callback_query(rgx("force_close"))
@@ -387,8 +366,8 @@ async def delete_cb_query(client, query):
         return
 
 
-
 # Thumbnail Generator Area
+
 
 async def download_thumbnail(vidid: str):
     async with aiohttp.ClientSession() as session:
@@ -414,17 +393,13 @@ async def get_user_logo(user_id):
     try:
         user_chat = await bot.get_chat(user_id)
         userimage = user_chat.photo.big_file_id
-        user_logo = await bot.download_media(
-            userimage, f"cache/{user_id}.png"
-        )
+        user_logo = await bot.download_media(userimage, f"cache/{user_id}.png")
     except:
         user_chat = await bot.get_me()
         userimage = user_chat.photo.big_file_id
-        user_logo = await bot.download_media(
-            userimage, f"cache/{bot.id}.png"
-        )
+        user_logo = await bot.download_media(userimage, f"cache/{bot.id}.png")
     return user_logo
-    
+
 
 def changeImageSize(maxWidth, maxHeight, image):
     widthRatio = maxWidth / image.size[0]
@@ -437,12 +412,10 @@ def changeImageSize(maxWidth, maxHeight, image):
 
 def circle_image(image, size):
     size = (size, size)
-    mask = Image.new('L', size, 0)
-    draw = ImageDraw.Draw(mask) 
+    mask = Image.new("L", size, 0)
+    draw = ImageDraw.Draw(mask)
     draw.ellipse((0, 0) + size, fill=255)
-    output = ImageOps.fit(
-        image, mask.size, centering=(0.5, 0.5)
-    )
+    output = ImageOps.fit(image, mask.size, centering=(0.5, 0.5))
     output.putalpha(mask)
     return output
 
@@ -489,7 +462,7 @@ async def create_thumbnail(results, user_id):
         image13.paste(image09, (140, 180), mask=image09)
         image13.paste(image10, (410, 450), mask=image10)
         image13.paste(image03, (0, 0), mask=image03)
-        
+
         font01 = ImageFont.truetype(BytesIO(base_font_01), 45)
         font02 = ImageFont.truetype(BytesIO(base_font_02), 30)
         draw = ImageDraw.Draw(image13)
@@ -503,25 +476,17 @@ async def create_thumbnail(results, user_id):
         for line in para:
             if j == 1:
                 j += 1
-                draw.text(
-                    (565, 230), f"{line}",
-                    fill="white", font=font01
-                )
+                draw.text((565, 230), f"{line}", fill="white", font=font01)
             if j == 0:
                 j += 1
-                draw.text(
-                    (565, title_height), f"{line}",
-                    fill="white", font=font01
-                )
+                draw.text((565, title_height), f"{line}", fill="white", font=font01)
         draw.text(
-            (565, 320),
-            f"{channel}  |  {views[:23]}",
-            (255, 255, 255), font=font02
+            (565, 320), f"{channel}  |  {views[:23]}", (255, 255, 255), font=font02
         )
-        
-        line_length = 580  
+
+        line_length = 580
         line_color = random_color_generator()
-     
+
         if duration != "Live":
             color_line_percentage = random.uniform(0.15, 0.85)
             color_line_length = int(line_length * color_line_percentage)
@@ -532,44 +497,44 @@ async def create_thumbnail(results, user_id):
             start_point_white = (565 + color_line_length, 380)
             end_point_white = (565 + line_length, 380)
             draw.line([start_point_white, end_point_white], fill="white", width=8)
-            circle_radius = 10 
+            circle_radius = 10
             circle_position = (end_point_color[0], end_point_color[1])
-            draw.ellipse([circle_position[0] - circle_radius, circle_position[1] - circle_radius,
-                      circle_position[0] + circle_radius, circle_position[1] + circle_radius], fill=line_color)
+            draw.ellipse(
+                [
+                    circle_position[0] - circle_radius,
+                    circle_position[1] - circle_radius,
+                    circle_position[0] + circle_radius,
+                    circle_position[1] + circle_radius,
+                ],
+                fill=line_color,
+            )
         else:
             line_color = (255, 0, 0)
             start_point_color = (565, 380)
             end_point_color = (565 + line_length, 380)
             draw.line([start_point_color, end_point_color], fill=line_color, width=9)
-        
-            circle_radius = 10 
-            circle_position = (end_point_color[0], end_point_color[1])
-            draw.ellipse([circle_position[0] - circle_radius, circle_position[1] - circle_radius,
-                          circle_position[0] + circle_radius, circle_position[1] + circle_radius], fill=line_color)
 
-        draw.text(
-            (565, 400), "00:00",
-            (255, 255, 255), font=font02
-        )
+            circle_radius = 10
+            circle_position = (end_point_color[0], end_point_color[1])
+            draw.ellipse(
+                [
+                    circle_position[0] - circle_radius,
+                    circle_position[1] - circle_radius,
+                    circle_position[0] + circle_radius,
+                    circle_position[1] + circle_radius,
+                ],
+                fill=line_color,
+            )
+
+        draw.text((565, 400), "00:00", (255, 255, 255), font=font02)
         if len(duration) == 4:
-            draw.text(
-                (1090, 400), duration,
-                (255, 255, 255), font=font02
-            )
+            draw.text((1090, 400), duration, (255, 255, 255), font=font02)
         elif len(duration) == 5:
-            draw.text(
-                (1055, 400), duration,
-                (255, 255, 255), font=font02
-            )
+            draw.text((1055, 400), duration, (255, 255, 255), font=font02)
         elif len(duration) == 8:
-            draw.text(
-                (1015, 400), duration,
-                (255, 255, 255), font=font02
-            )
-        
-        image14 = ImageOps.expand(
-            image13, border=10, fill=random_color_generator()
-        )
+            draw.text((1015, 400), duration, (255, 255, 255), font=font02)
+
+        image14 = ImageOps.expand(image13, border=10, fill=random_color_generator())
         image15 = changeImageSize(1280, 720, image14)
         image15.save(f"cache/{vidid}_{user_id}.png")
         return f"cache/{vidid}_{user_id}.png"
@@ -578,10 +543,8 @@ async def create_thumbnail(results, user_id):
         return START_IMAGE_URL
 
 
-   
-
-
 # Some Functions For VC Player
+
 
 async def add_active_audio_chat(chat_id):
     if chat_id in ACTIVE_VIDEO_CHATS:
@@ -610,8 +573,8 @@ async def remove_active_media_chat(chat_id):
         ACTIVE_MEDIA_CHATS.remove(chat_id)
 
 
-
 # VC Player Queue
+
 
 async def add_to_queue(
     chat_id,
@@ -637,8 +600,8 @@ async def add_to_queue(
     else:
         QUEUE[chat_id] = []
         QUEUE[chat_id].append(put)
-        
-    return len(QUEUE[chat_id]) -1
+
+    return len(QUEUE[chat_id]) - 1
 
 
 async def clear_queue(chat_id):
@@ -649,11 +612,12 @@ async def clear_queue(chat_id):
 
 # Log All Streams
 
+
 async def stream_logger(
     chat_id, user, title, duration, stream_type, thumbnail, position=None
 ):
     if LOG_GROUP_ID != 0:
-        if chat_id != LOG_GROUP_ID: 
+        if chat_id != LOG_GROUP_ID:
             chat = await bot.get_chat(chat_id)
             chat_name = chat.title
             if chat.username:
@@ -689,17 +653,17 @@ async def stream_logger(
                 await bot.send_photo(LOG_GROUP_ID, photo=thumbnail, caption=caption)
             except Exception:
                 pass
-        
+
 
 # Change stream & Close Stream
+
 
 async def change_stream(chat_id):
     queued = QUEUE.get(chat_id)
     if queued:
         queued.pop(0)
     if not queued:
-        await bot.send_message(
-            chat_id, "**❎ Queue is Empty, So Left\nFrom VC❗...**")
+        await bot.send_message(chat_id, "**❎ Queue is Empty, So Left\nFrom VC❗...**")
         return await close_stream(chat_id)
 
     title = queued[0].get("title")
@@ -711,7 +675,13 @@ async def change_stream(chat_id):
         requested_by = queued[0].get("user").mention
     except Exception:
         if queued[0].get("user").username:
-            requested_by = "[" + queued[0].get("user").title + "](https://t.me/" + queued[0].get("user").username + ")"
+            requested_by = (
+                "["
+                + queued[0].get("user").title
+                + "](https://t.me/"
+                + queued[0].get("user").username
+                + ")"
+            )
         else:
             requested_by = queued[0].get("user").title
 
@@ -720,16 +690,16 @@ async def change_stream(chat_id):
             media_path=stream_file,
             video_flags=MediaStream.Flags.IGNORE,
             audio_parameters=AudioQuality.STUDIO,
-            ytdlp_parameters='--cookies cookies.txt',
+            ytdlp_parameters="--cookies cookies.txt",
         )
     elif stream_type == "Video":
         stream_media = MediaStream(
             media_path=stream_file,
             audio_parameters=AudioQuality.STUDIO,
             video_parameters=VideoQuality.HD_720p,
-            ytdlp_parameters='--cookies cookies.txt',
+            ytdlp_parameters="--cookies cookies.txt",
         )
-        
+
     await call.play(chat_id, stream_media, config=call_config)
     caption = f"""**✅ Started Streaming On VC.**
 
@@ -761,6 +731,7 @@ async def close_stream(chat_id):
 
 # Get Call Status
 
+
 async def get_call_status(chat_id):
     calls = await call.calls
     chat_call = calls.get(chat_id)
@@ -770,14 +741,13 @@ async def get_call_status(chat_id):
             call_status = "IDLE"
         elif status == Call.Status.ACTIVE:
             call_status = "PLAYING"
-            
+
         elif status == Call.Status.PAUSED:
             call_status = "PAUSED"
     else:
         call_status = "NOTHING"
 
     return call_status
-    
 
 
 @bot.on_message(cdz(["play", "vplay"]) & ~pyrofl.private)
@@ -792,8 +762,20 @@ async def stream_audio_or_video(client, message):
     audio = (replied.audio or replied.voice) if replied else None
     video = (replied.video or replied.document) if replied else None
     stickers = [
-        "🌹", "🌺", "🎉", "🎃", "💥", "🦋", "🕊️",
-        "❤️", "💖", "💝", "💗", "💓", "💘", "💞",
+        "🌹",
+        "🌺",
+        "🎉",
+        "🎃",
+        "💥",
+        "🦋",
+        "🕊️",
+        "❤️",
+        "💖",
+        "💝",
+        "💗",
+        "💓",
+        "💘",
+        "💞",
     ]
     aux = await message.reply_text(random.choice(stickers))
     if audio:
@@ -815,7 +797,7 @@ async def stream_audio_or_video(client, message):
             return
         result_x = None
         stream_type = "Video"
-        
+
     else:
         if len(message.command) < 2:
             buttons = InlineKeyboardMarkup(
@@ -839,18 +821,15 @@ async def stream_audio_or_video(client, message):
             vidid = resu[0] if resu[0] else None
         else:
             vidid = None
-        url = (
-            f"https://www.youtube.com/watch?v={vidid}"
-            if vidid else None
-        )
+        url = f"https://www.youtube.com/watch?v={vidid}" if vidid else None
         search_query = url if url else query
         results = VideosSearch(search_query, limit=1)
         for result in (await results.next())["result"]:
             vid_id = vidid if vidid else result["id"]
             vid_url = url if url else result["link"]
             try:
-                title = "[" + (result['title'][:18]) + "]" + f"({vid_url})"
-                title_x = result['title']
+                title = "[" + (result["title"][:18]) + "]" + f"({vid_url})"
+                title_x = result["title"]
             except Exception:
                 title = "Unsupported Title"
                 title_x = title
@@ -859,9 +838,7 @@ async def stream_audio_or_video(client, message):
                 if not durationx:
                     duration = "Live Stream"
                     duration_x = "Live"
-                elif (
-                    len(durationx) == 4 or len(durationx) == 7
-                ):
+                elif len(durationx) == 4 or len(durationx) == 7:
                     duration = f"0{durationx} Mins"
                     duration_x = f"0{durationx}"
                 else:
@@ -880,12 +857,15 @@ async def stream_audio_or_video(client, message):
                 channel = "Unknown Channel"
         stream_file = url if url else result["link"]
         result_x = {
-            "title": title_x, "id": vid_id,
-            "link": vid_url, "duration": duration_x,
-            "views": views, "channel": channel,
+            "title": title_x,
+            "id": vid_id,
+            "link": vid_url,
+            "duration": duration_x,
+            "views": views,
+            "channel": channel,
         }
         stream_type = "Audio" if str(message.command[0][0]) != "v" else "Video"
-    
+
     try:
         requested_by = user.mention
     except Exception:
@@ -908,23 +888,23 @@ async def stream_audio_or_video(client, message):
             media_path=stream_file,
             video_flags=MediaStream.Flags.IGNORE,
             audio_parameters=AudioQuality.STUDIO,
-            ytdlp_parameters='--cookies cookies.txt',
+            ytdlp_parameters="--cookies cookies.txt",
         )
     elif stream_type == "Video":
         stream_media = MediaStream(
             media_path=stream_file,
             audio_parameters=AudioQuality.STUDIO,
             video_parameters=VideoQuality.HD_720p,
-            ytdlp_parameters='--cookies cookies.txt',
+            ytdlp_parameters="--cookies cookies.txt",
         )
     call_status = await get_call_status(chat_id)
     try:
-        if (
-            call_status == "PLAYING" or call_status == "PAUSED"
-        ):
+        if call_status == "PLAYING" or call_status == "PAUSED":
             try:
                 thumbnail = await create_thumbnail(result_x, user.id)
-                position = await add_to_queue(chat_id, user, title, duration, stream_file, stream_type, thumbnail)
+                position = await add_to_queue(
+                    chat_id, user, title, duration, stream_file, stream_type, thumbnail
+                )
                 caption = f"""**✅ Added To Queue At :** `#{position}`
 
 **🥀 Title:** {title}
@@ -932,16 +912,16 @@ async def stream_audio_or_video(client, message):
 **🦋 Stream Type:** {stream_type}
 **👾 Requested By:** {requested_by}"""
                 await bot.send_photo(chat_id, thumbnail, caption, reply_markup=buttons)
-                await stream_logger(chat_id, user, title, duration, stream_type, thumbnail, position)
+                await stream_logger(
+                    chat_id, user, title, duration, stream_type, thumbnail, position
+                )
             except Exception as e:
                 try:
                     return await aux.edit(f"**Queue Error:** `{e}`")
                 except Exception:
                     LOGGER.info(f"Queue Error: {e}")
                     return
-        elif (
-            call_status == "IDLE" or call_status == "NOTHING"
-        ): 
+        elif call_status == "IDLE" or call_status == "NOTHING":
             try:
                 await call.play(chat_id, stream_media, config=call_config)
             except NoActiveGroupCall:
@@ -956,11 +936,15 @@ async def stream_audio_or_video(client, message):
                                 f"**🤖 At First, Unban [Assistant ID](https://t.me/{app.me.username}) To Start Stream❗**"
                             )
                         except Exception:
-                            LOGGER.info(f"🤖 At First, Unban Assistant ID To Start Stream❗**")
+                            LOGGER.info(
+                                f"🤖 At First, Unban Assistant ID To Start Stream❗**"
+                            )
                             return
                 except ChatAdminRequired:
                     try:
-                        return await aux.edit_text("**🤖 At First, Promote Me as An Admin❗**")
+                        return await aux.edit_text(
+                            "**🤖 At First, Promote Me as An Admin❗**"
+                        )
                     except Exception:
                         LOGGER.info("**🤖 At First, Promote Me as An Admin❗**")
                         return
@@ -980,7 +964,9 @@ async def stream_audio_or_video(client, message):
                             )
                         except Exception as e:
                             try:
-                                return await aux.edit_text(f"**🚫 Assistant Error:** `{e}`")
+                                return await aux.edit_text(
+                                    f"**🚫 Assistant Error:** `{e}`"
+                                )
                             except Exception:
                                 pass
                             LOGGER.info(f"🚫 Assistant Error: {e}")
@@ -993,7 +979,9 @@ async def stream_audio_or_video(client, message):
                             await bot.approve_chat_join_request(chat_id, adi.me.id)
                         except Exception as e:
                             try:
-                                return await aux.edit_text(f"**🚫 Approve Error:** `{e}`")
+                                return await aux.edit_text(
+                                    f"**🚫 Approve Error:** `{e}`"
+                                )
                             except Exception:
                                 pass
                             LOGGER.info(f"🚫 Approve Error: {e}")
@@ -1002,7 +990,9 @@ async def stream_audio_or_video(client, message):
                         pass
                     except Exception as e:
                         try:
-                            return await aux.edit_text(f"**🚫 Assistant Join Error:** `{e}`")
+                            return await aux.edit_text(
+                                f"**🚫 Assistant Join Error:** `{e}`"
+                            )
                         except Exception:
                             pass
                         LOGGER.info(f"🚫 Assistant Join Error: {e}")
@@ -1019,7 +1009,9 @@ async def stream_audio_or_video(client, message):
                 return await aux.edit_text("**⚠️ Telegram Server Issue❗...**")
             try:
                 thumbnail = await create_thumbnail(result_x, user.id)
-                position = await add_to_queue(chat_id, user, title, duration, stream_file, stream_type, thumbnail)
+                position = await add_to_queue(
+                    chat_id, user, title, duration, stream_file, stream_type, thumbnail
+                )
                 caption = f"""**✅ Started Streaming On VC.**
 
 **🥀 Title:** {title}
@@ -1027,7 +1019,9 @@ async def stream_audio_or_video(client, message):
 **🦋 Stream Type:** {stream_type}
 **👾 Requested By:** {requested_by}"""
                 await bot.send_photo(chat_id, thumbnail, caption, reply_markup=buttons)
-                await stream_logger(chat_id, user, title, duration, stream_type, thumbnail)
+                await stream_logger(
+                    chat_id, user, title, duration, stream_type, thumbnail
+                )
             except Exception as e:
                 try:
                     return await aux.edit(f"**Send Error:** `{e}`")
@@ -1058,9 +1052,7 @@ async def pause_running_stream_on_vc(client, message):
         pass
     try:
         call_status = await get_call_status(chat_id)
-        if (
-            call_status == "IDLE" or call_status == "NOTHING"
-        ):
+        if call_status == "IDLE" or call_status == "NOTHING":
             return await message.reply_text("**❎ Nothing Streaming❗**")
 
         elif call_status == "PAUSED":
@@ -1078,8 +1070,6 @@ async def pause_running_stream_on_vc(client, message):
             return
 
 
-
-
 @bot.on_message(cdx(["resume", "vresume"]) & ~pyrofl.private)
 async def resume_paused_stream_on_vc(client, message):
     chat_id = message.chat.id
@@ -1089,9 +1079,7 @@ async def resume_paused_stream_on_vc(client, message):
         pass
     try:
         call_status = await get_call_status(chat_id)
-        if (
-            call_status == "IDLE" or call_status == "NOTHING"
-        ):
+        if call_status == "IDLE" or call_status == "NOTHING":
             return await message.reply_text("**❎ Nothing Streaming❗**")
 
         elif call_status == "PLAYING":
@@ -1109,11 +1097,6 @@ async def resume_paused_stream_on_vc(client, message):
             return
 
 
-
-
-
-
-
 @bot.on_message(cdx(["skip", "vskip"]) & ~pyrofl.private)
 async def skip_and_change_stream(client, message):
     chat_id = message.chat.id
@@ -1123,18 +1106,24 @@ async def skip_and_change_stream(client, message):
         pass
     try:
         call_status = await get_call_status(chat_id)
-        if (
-            call_status == "IDLE" or call_status == "NOTHING"
-        ):
-            return await bot.send_message(
-                chat_id, "**❎ Nothing Streaming❗...**"
-            )
-        elif (
-            call_status == "PLAYING" or call_status == "PAUSED"
-        ):
+        if call_status == "IDLE" or call_status == "NOTHING":
+            return await bot.send_message(chat_id, "**❎ Nothing Streaming❗...**")
+        elif call_status == "PLAYING" or call_status == "PAUSED":
             stickers = [
-                "🌹", "🌺", "🎉", "🎃", "💥", "🦋", "🕊️",
-                "❤️", "💖", "💝", "💗", "💓", "💘", "💞",
+                "🌹",
+                "🌺",
+                "🎉",
+                "🎃",
+                "💥",
+                "🦋",
+                "🕊️",
+                "❤️",
+                "💖",
+                "💝",
+                "💗",
+                "💓",
+                "💘",
+                "💞",
             ]
             aux = await message.reply_text(random.choice(stickers))
             await change_stream(chat_id)
@@ -1148,9 +1137,6 @@ async def skip_and_change_stream(client, message):
         except Exception:
             LOGGER.info(f"🚫 Skip Error: {e}")
             return
-            
-            
-
 
 
 @bot.on_message(cdx(["end", "vend"]) & ~pyrofl.private)
@@ -1166,9 +1152,7 @@ async def stop_stream_and_leave_vc(client, message):
             return await message.reply_text("**❎ Nothing Streaming❗**")
         elif call_status == "IDLE":
             return await message.reply_text("**✅ Succesfully Left From VC❗**")
-        elif (
-            call_status == "PLAYING" or call_status == "PAUSED"
-        ):
+        elif call_status == "PLAYING" or call_status == "PAUSED":
             await close_stream(chat_id)
             return await message.reply_text("**❎ Stopped Stream & Left\nFrom VC❗...**")
         else:
@@ -1181,26 +1165,18 @@ async def stop_stream_and_leave_vc(client, message):
             return
 
 
-
-
-
-
 @call.on_update(pytgfl.chat_update(ChatUpdate.Status.CLOSED_VOICE_CHAT))
 @call.on_update(pytgfl.chat_update(ChatUpdate.Status.KICKED))
 @call.on_update(pytgfl.chat_update(ChatUpdate.Status.LEFT_GROUP))
 async def stream_services_handler(_, update: Update):
     chat_id = update.chat_id
     return await close_stream(chat_id)
-    
+
 
 @call.on_update(pytgfl.stream_end())
 async def stream_end_handler(_, update: Update):
     chat_id = update.chat_id
     return await change_stream(chat_id)
-                
-    
-
-
 
 
 @bot.on_message(cdx(["repo", "repository"]) & ~pyrofl.bot)
@@ -1233,15 +1209,16 @@ With Your ☛ Other Friends.**"""
                     text="🗑️ Close",
                     callback_data="force_close",
                 )
-            ]
+            ],
         ]
     )
     try:
-        await message.reply_photo(photo=START_IMAGE_URL, caption=caption, reply_markup=buttons)
+        await message.reply_photo(
+            photo=START_IMAGE_URL, caption=caption, reply_markup=buttons
+        )
     except Exception as e:
         LOGGER.info(f"🚫 Error: {e}")
         return
-
 
 
 @bot.on_message(cdx("update") & bot_owner_only)
@@ -1265,9 +1242,7 @@ async def update_repo_latest(client, message):
     updates = ""
     ordinal = lambda format: "%d%s" % (
         format,
-        "tsnrhtdd"[
-            (format // 10 % 10 != 1) * (format % 10 < 4) * format % 10 :: 4
-        ],
+        "tsnrhtdd"[(format // 10 % 10 != 1) * (format % 10 < 4) * format % 10 :: 4],
     )
     for info in repo.iter_commits(f"HEAD..origin/aditya"):
         updates += f"<b>➣ #{info.count()}: [{info.summary}]({REPO_}/commit/{info}) by -> {info.author}</b>\n\t\t\t\t<b>➥ Commited on:</b> {ordinal(int(datetime.fromtimestamp(info.committed_date).time.strftime('%d')))} {datetime.fromtimestamp(info.committed_date).time.strftime('%b')}, {datetime.fromtimestamp(info.committed_date).time.strftime('%Y')}\n\n"
@@ -1280,9 +1255,7 @@ async def update_repo_latest(client, message):
             f"<b>A new update is available for the Bot!</b>\n\n➣ Pushing Updates Now</code>\n\n**<u>Updates:</u>**\n\n[Click Here to checkout Updates]({url})"
         )
     else:
-        nrs = await response.edit(
-            _final_updates_, disable_web_page_preview=True
-        )
+        nrs = await response.edit(_final_updates_, disable_web_page_preview=True)
     os.system("git stash &> /dev/null && git pull")
     await response.edit(
         f"{nrs.text}\n\nBot was updated successfully! Now, wait for 1 - 2 mins until the bot reboots!"
@@ -1293,8 +1266,5 @@ async def update_repo_latest(client, message):
     return
 
 
-
-
 if __name__ == "__main__":
     loop.run_until_complete(main())
-
