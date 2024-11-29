@@ -1168,7 +1168,7 @@ async def stream_end_handler(_, update: Update):
 
 
 
-@bot.on_message(cdx(["repo", "repository"]) & ~pyrofl.bot)
+@bot.on_message(cdx(["repo", "repository"]) & pyrofl.private)
 async def git_repo_link(client, message):
     if message.sender_chat:
         mention = message.sender_chat.title
