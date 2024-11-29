@@ -14,6 +14,7 @@ from logging.handlers import RotatingFileHandler
 
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError
+from motor.motor_asyncio import AsyncIOMotorClient as _mongo_async_
 
 from pyrogram import Client, filters as pyrofl
 from pytgcalls import PyTgCalls, filters as pytgfl
@@ -37,7 +38,6 @@ from pytgcalls.types import Call, MediaStream, AudioQuality, VideoQuality
 
 from PIL import Image, ImageDraw, ImageEnhance
 from PIL import ImageFilter, ImageFont, ImageOps
-from motor.motor_asyncio import AsyncIOMotorClient
 from youtubesearchpython.__future__ import VideosSearch
 
 
@@ -133,7 +133,8 @@ bot = Client(
 call = PyTgCalls(app)
 call_config = GroupCallConfig(auto_start=False)
 
-mongodb = AsyncIOMotorClient(MONGO_DB_URL).Aditya
+mongo_async_cli = _mongo_async_(MONGO_DB_URL)
+mongodb = mongo_async_cli.aditya
 
 # store start time
 __start_time__ = time.time()
@@ -177,7 +178,7 @@ async def main():
         LOGGER.info("'MONGO_DB_URL' - Not Found !!")
         sys.exit()
     try:
-        await mongodb.admin.command('ping')
+        await mongo_async_cli.admin.command('ping')
     except Exception:
         LOGGER.info("❌ 'MONGO_DB_URL' - Not Valid !!")
         sys.exit()
