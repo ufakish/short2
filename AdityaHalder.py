@@ -1188,12 +1188,14 @@ With Your ☛ Other Friends.**"""
                 InlineKeyboardButton(
                     text="🌺 Open Repository Link 🦋",
                     url="https://github.com/AdityaHalder/AdityaPlayer",
-                ),
+                )
+            ],
+            [
                 InlineKeyboardButton(
                     text="🗑️ Close",
                     callback_data="force_close",
                 )
-            ],
+            ]
         ]
     )
     try:
