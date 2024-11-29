@@ -37,6 +37,7 @@ from pytgcalls.types import Call, MediaStream, AudioQuality, VideoQuality
 
 from PIL import Image, ImageDraw, ImageEnhance
 from PIL import ImageFilter, ImageFont, ImageOps
+from motor.motor_asyncio import AsyncIOMotorClient
 from youtubesearchpython.__future__ import VideosSearch
 
 
@@ -132,6 +133,7 @@ bot = Client(
 call = PyTgCalls(app)
 call_config = GroupCallConfig(auto_start=False)
 
+mongodb = AsyncIOMotorClient(MONGO_DB_URL).Aditya
 
 # store start time
 __start_time__ = time.time()
@@ -170,9 +172,15 @@ async def main():
     if not STRING_SESSION:
         LOGGER.info("❌ 'STRING_SESSION' - Not Found ‼️")
         sys.exit()
-    # if not MONGO_DB_URL:
-    # LOGGER.info("'MONGO_DB_URL' - Not Found !!")
-    # sys.exit()
+
+    if not MONGO_DB_URL:
+        LOGGER.info("'MONGO_DB_URL' - Not Found !!")
+        sys.exit()
+    try:
+        await mongodb.admin.command('ping')
+    except Exception:
+        LOGGER.info("❌ 'MONGO_DB_URL' - Not Valid !!")
+        sys.exit()
     LOGGER.info("✅ Required Variables Are Collected.")
     await asyncio.sleep(1)
     LOGGER.info("🌀 Starting All Clients ...")
