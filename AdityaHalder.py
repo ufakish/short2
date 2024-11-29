@@ -669,20 +669,19 @@ async def create_thumbnail(results, user_id):
 # Some Functions For VC Player
 
 
-async def add_active_audio_chat(chat_id):
-    if chat_id in ACTIVE_VIDEO_CHATS:
-        ACTIVE_VIDEO_CHATS.remove(chat_id)
-    if chat_id not in ACTIVE_AUDIO_CHATS:
-        ACTIVE_AUDIO_CHATS.append(chat_id)
-    if chat_id not in ACTIVE_MEDIA_CHATS:
-        ACTIVE_MEDIA_CHATS.append(chat_id)
-
-
-async def add_active_video_chat(chat_id):
-    if chat_id in ACTIVE_AUDIO_CHATS:
-        ACTIVE_AUDIO_CHATS.remove(chat_id)
-    if chat_id not in ACTIVE_VIDEO_CHATS:
-        ACTIVE_VIDEO_CHATS.append(chat_id)
+async def add_active_media_chat(
+    chat_id, stream_type
+):
+    if stream_type == "Audio":
+        if chat_id in ACTIVE_VIDEO_CHATS:
+            ACTIVE_VIDEO_CHATS.remove(chat_id)
+        if chat_id not in ACTIVE_AUDIO_CHATS:
+            ACTIVE_AUDIO_CHATS.append(chat_id)
+    elif stream_type == "Video":
+        if chat_id in ACTIVE_AUDIO_CHATS:
+            ACTIVE_AUDIO_CHATS.remove(chat_id)
+        if chat_id not in ACTIVE_VIDEO_CHATS:
+            ACTIVE_VIDEO_CHATS.append(chat_id)
     if chat_id not in ACTIVE_MEDIA_CHATS:
         ACTIVE_MEDIA_CHATS.append(chat_id)
 
@@ -824,6 +823,7 @@ async def change_stream(chat_id):
         )
 
     await call.play(chat_id, stream_media, config=call_config)
+    await add_active_media_chat(chat_id, stream_type)
     caption = f"""**✅ Started Streaming On VC.**
 
 **🥀 Title:** {title}
@@ -1158,6 +1158,7 @@ async def stream_audio_or_video(client, message):
             await aux.delete()
         except Exception:
             pass
+        await add_active_media_chat(chat_id, stream_type)
         return
     except Exception as e:
         try:
@@ -1440,12 +1441,20 @@ async def check_total_stats(client, query):
         uptime = get_readable_time((boot_time))
         served_chats = len(await get_served_chats())
         served_users = len(await get_served_users())
+        activ_chats = len(ACTIVE_MEDIA_CHATS)
+        audio_chats = len(ACTIVE_AUDIO_CHATS)
+        video_chats = len(ACTIVE_VIDEO_CHATS)
+        
         return await query.answer(
             f"""⏱️ Bot Run Time [Boot]
 ☛ {uptime}
 
 🔴 Served Chats: {served_chats}
-🔵 Served Users: {served_users}""",
+🔵 Served Users: {served_users}
+
+🦋 Active Stream {activ_chats} Chats.
+   ★ Audio Chats: {audio_chats}
+   ★ Video Chats: {video_chats}""",
             show_alert=True
         )
     except Exception as e:
