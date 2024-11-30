@@ -1453,8 +1453,8 @@ async def check_total_stats(client, query):
 🔵 Served Users: {served_users}
 
 🦋 Total Active Chats [{activ_chats}]
-✿⋟ Audio Chats: {audio_chats}
-✿⋟ Video Chats: {video_chats}""",
+✿⋟ Audio Stream: {audio_chats}
+✿⋟ Video Stream: {video_chats}""",
             show_alert=True
         )
     except Exception as e:
