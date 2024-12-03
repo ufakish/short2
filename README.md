@@ -26,12 +26,19 @@ Aditya-Player is an advanced & powerful multi-featured Telegram vc streaming bot
 **Required Variables !**
 
 `API_ID`
+
 `API_HASH`
+
 `BOT_TOKEN`
+
 `STRING_SESSION`
+
 `MONGO_DB_URL`
+
 `OWNER_ID`
+
 `LOG_GROUP_ID`
+
 `START_IMAGE_URL`
 
 
