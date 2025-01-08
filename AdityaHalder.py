@@ -78,14 +78,14 @@ LOGGER = logging.getLogger("SYSTEM")
 if os.path.exists("Config.env"):
     load_dotenv("Config.env")
 
-API_ID = int(getenv("API_ID", 0))
-API_HASH = getenv("API_HASH", None)
-BOT_TOKEN = getenv("BOT_TOKEN", None)
-STRING_SESSION = getenv("STRING_SESSION", None)
-MONGO_DB_URL = getenv("MONGO_DB_URL", None)
-OWNER_ID = int(getenv("OWNER_ID", 0))
-LOG_GROUP_ID = int(getenv("LOG_GROUP_ID", 0))
-START_IMAGE_URL = getenv("START_IMAGE_URL", None)
+API_ID = int(getenv("API_ID", 20058106))
+API_HASH = getenv("72bdf9952623c398990a49ab408a946c", None)
+BOT_TOKEN = getenv("7433755116:AAEZ9D8iFh2UxtD6YZyn3bvoW2qjE7_ng_0", None)
+STRING_SESSION = getenv("BQEyD_oAqR3UFphD-jVHAnT7XX5qZlG69kj8egf3btrXOdnSwq2VuNU2DwBsQRCA8QUepn703dI2uMHrDh155pBQAHjChcmMoaHovmGAvJ92nPudkwmAJX0M_f8oU5qmPLVUip0L-FXKfrKi9eIjU4ygQ3_1RQheEyj0y7neJ49ksKa7hl9KVX36D5NI9P1Fkk1suFlixbWbUjILYr_ZKIL3Bz28-hTAdmMORbf9qqgeUb8xN9E_YvN2FGNM7afPbrSgqjHVlrQxP4cBQrMxDBIa2_UapF5whTT4w5qO-zVtBMzXHkkptB6ORBAqNtXGFna2WnHBwHmp0w7_oAkkhycWMJAbUgAAAAGpJESOAA", None)
+MONGO_DB_URL = getenv("mongodb+srv://asrushfig:2003@cluster0.6vdid.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", None)
+OWNER_ID = int(getenv("OWNER_ID", 5050578106))
+LOG_GROUP_ID = int(getenv("LOG_GROUP_ID", -1002421573669))
+START_IMAGE_URL = getenv("https://envs.sh/CwU.jpg", None)
 
 
 # Memory Database
