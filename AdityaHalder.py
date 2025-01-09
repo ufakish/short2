@@ -364,17 +364,11 @@ async def start_message_private(client, message):
             pass
             
     else:
-        caption = f"""<blockquote>**➻ Hello, {mention}
-
-🥀 I am An ≽ Advanced ≽ High Quality
-Bot, I Can Stream 🌿 Audio & Video In
-Your ♚ Channel And Group.
-
-🐬 Must Click ❥ Open Command List
-Button ⋟ To Get More Info's 🦋 About
-My All Commands.
-
-💐 Feel Free ≽ To Use Me › And Share
+        caption = f"""<blockquote><b>Hello, {mention}</b>
+<b>This Music Player Has Been Launched By Google In 𝟮𝟬𝟮𝟱.
+This Music Player Is Made With All Update Version Modules
+So That Telegram Users Do Not Face Any Problem.
+\n\n 𝗖𝗿𝗲𝗱𝗶𝘁 ➠ jiosaavn_robot.t.me \n\n</b></blockquote>
 With Your ☛ Other Friends.**</blockquote>"""
         parse_mode=ParseMode.HTML,
         buttons = InlineKeyboardMarkup(
