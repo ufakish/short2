@@ -9,6 +9,7 @@ from time import strftime
 from functools import partial
 from dotenv import load_dotenv
 from datetime import datetime
+from pyrogram.enums import ParseMode
 from typing import Union, List, Pattern
 from logging.handlers import RotatingFileHandler
 
@@ -363,7 +364,7 @@ async def start_message_private(client, message):
             pass
             
     else:
-        caption = f"""**➻ Hello, {mention}
+        caption = f"""<blockquote>**➻ Hello, {mention}
 
 🥀 I am An ≽ Advanced ≽ High Quality
 Bot, I Can Stream 🌿 Audio & Video In
@@ -374,7 +375,8 @@ Button ⋟ To Get More Info's 🦋 About
 My All Commands.
 
 💐 Feel Free ≽ To Use Me › And Share
-With Your ☛ Other Friends.**"""
+With Your ☛ Other Friends.**</blockquote>"""
+        parse_mode=ParseMode.HTML,
         buttons = InlineKeyboardMarkup(
             [
                 [
