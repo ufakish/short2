@@ -417,6 +417,7 @@ This Music Player Is Made With All Update Version Modules
 So That Telegram Users Do Not Face Any Problem.
 \n\n 𝗖𝗿𝗲𝗱𝗶𝘁 ➠ jiosaavn_robot.t.me \n\n</b></blockquote>
 With Your ☛ Other Friends.**</blockquote>"""
+    parse_mode=ParseMode.HTML,
     buttons = InlineKeyboardMarkup(
         [
             [
@@ -443,6 +444,7 @@ This Music Player Is Made With All Update Version Modules
 So That Telegram Users Do Not Face Any Problem.
 \n\n 𝗖𝗿𝗲𝗱𝗶𝘁 ➠ jiosaavn_robot.t.me \n\n</b></blockquote>
 With Your ☛ Other Friends.**</blockquote>"""
+    parse_mode=ParseMode.HTML,
     buttons = InlineKeyboardMarkup(
         [
             [
@@ -739,11 +741,23 @@ async def stream_logger(
             except Exception:
                 requested_by = user.title
             if position:
-                caption = caption = f"""<blockquote>\n𝗚𝗼𝗼𝗴𝗹𝗲 𝗠𝘂𝘀𝗶𝗰 𝗣𝗿𝗼𝘃𝗶𝗱𝗲𝘀 𝗦𝗶𝗺𝗽𝗹𝗲 𝗮𝗻𝗱 𝗖𝗼𝗼𝗹 𝗜𝗻𝘁𝗲𝗿𝗳𝗮𝗰𝗲 𝘄𝗶𝘁𝗵 𝗛𝗶𝗴𝗵 𝗤𝘂𝗮𝗹𝗶𝘁𝘆 𝗦𝗼𝘂𝗻𝗱𝘀.<b> /skip</b><b>  /stop</b><b>  /setting</b></blockquote>"""
-                parse_mode=ParseMode.HTML,
+                caption = f"""**✅ Added To Queue At :** `#{position}`
+
+**🥀 Title:** {title}
+**🐬 Duration:** {duration}
+**🦋 Stream Type:** {stream_type}
+**🌺 Chat Name:** {chat_name}
+**🌼 Chat Link:** {chat_link}
+**👾 Requested By:** {requested_by}"""
             else:
-                caption = f"""<blockquote>\n𝗚𝗼𝗼𝗴𝗹𝗲 𝗠𝘂𝘀𝗶𝗰 𝗣𝗿𝗼𝘃𝗶𝗱𝗲𝘀 𝗦𝗶𝗺𝗽𝗹𝗲 𝗮𝗻𝗱 𝗖𝗼𝗼𝗹 𝗜𝗻𝘁𝗲𝗿𝗳𝗮𝗰𝗲 𝘄𝗶𝘁𝗵 𝗛𝗶𝗴𝗵 𝗤𝘂𝗮𝗹𝗶𝘁𝘆 𝗦𝗼𝘂𝗻𝗱𝘀.<b> /skip</b><b>  /stop</b><b>  /setting</b></blockquote>"""
-                parse_mode=ParseMode.HTML,
+                caption = f"""**✅ Started Streaming On VC.**
+
+**🥀 Title:** {title}
+**🐬 Duration:** {duration}
+**🦋 Stream Type:** {stream_type}
+**🌺 Chat Name:** {chat_name}
+**🌼 Chat Link:** {chat_link}
+**👾 Requested By:** {requested_by}"""
                 
             try:
                 await bot.send_photo(LOG_GROUP_ID, photo=thumbnail, caption=caption)
@@ -798,8 +812,14 @@ async def change_stream(chat_id):
 
     await call.play(chat_id, stream_media, config=call_config)
     await add_active_media_chat(chat_id, stream_type)
-    caption = f"""<blockquote>\n𝗚𝗼𝗼𝗴𝗹𝗲 𝗠𝘂𝘀𝗶𝗰 𝗣𝗿𝗼𝘃𝗶𝗱𝗲𝘀 𝗦𝗶𝗺𝗽𝗹𝗲 𝗮𝗻𝗱 𝗖𝗼𝗼𝗹 𝗜𝗻𝘁𝗲𝗿𝗳𝗮𝗰𝗲 𝘄𝗶𝘁𝗵 𝗛𝗶𝗴𝗵 𝗤𝘂𝗮𝗹𝗶𝘁𝘆 𝗦𝗼𝘂𝗻𝗱𝘀.<b> /skip</b><b>  /stop</b><b>  /setting</b></blockquote>"""
-    parse_mode=ParseMode.HTML,
+    caption = f"""**✅ Started Streaming On VC.**
+
+**🥀 Title:** {title}
+**🐬 Duration:** {duration}
+**🦋 Stream Type:** {stream_type}
+**👾 Requested By:** {requested_by}"""
+    # caption = f"""<blockquote>\n𝗚𝗼𝗼𝗴𝗹𝗲 𝗠𝘂𝘀𝗶𝗰 𝗣𝗿𝗼𝘃𝗶𝗱𝗲𝘀 𝗦𝗶𝗺𝗽𝗹𝗲 𝗮𝗻𝗱 𝗖𝗼𝗼𝗹 𝗜𝗻𝘁𝗲𝗿𝗳𝗮𝗰𝗲 𝘄𝗶𝘁𝗵 𝗛𝗶𝗴𝗵 𝗤𝘂𝗮𝗹𝗶𝘁𝘆 𝗦𝗼𝘂𝗻𝗱𝘀.<b> /skip</b><b>  /stop</b><b>  /setting</b></blockquote>"""
+    # parse_mode=ParseMode.HTML,
     buttons = InlineKeyboardMarkup(
         [
             [
@@ -856,20 +876,20 @@ async def stream_audio_or_video(client, message):
     audio = (replied.audio or replied.voice) if replied else None
     video = (replied.video or replied.document) if replied else None
     stickers = [
-        "🌹",
-        "🌺",
-        "🎉",
-        "🎃",
-        "💥",
-        "🦋",
-        "🕊️",
-        "❤️",
-        "💖",
-        "💝",
-        "💗",
-        "💓",
-        "💘",
-        "💞",
+        "wait....",
+        "wait for .....",
+        # "🎉",
+        # "🎃",
+        # "💥",
+        # "🦋",
+        # "🕊️",
+        # "❤️",
+        # "💖",
+        # "💝",
+        # "💗",
+        # "💓",
+        # "💘",
+        # "💞",
     ]
     aux = await message.reply_text(random.choice(stickers))
     if audio:
