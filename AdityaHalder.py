@@ -364,24 +364,30 @@ async def start_message_private(client, message):
             pass
             
     else:
-        caption = f"""<blockquote><b>Hello, {mention}</b>
-<b>This Music Player Has Been Launched By Google In 𝟮𝟬𝟮𝟱.
-This Music Player Is Made With All Update Version Modules
-So That Telegram Users Do Not Face Any Problem.
-\n\n 𝗖𝗿𝗲𝗱𝗶𝘁 ➠ jiosaavn_robot.t.me \n\n</b></blockquote>
+        caption = f"""<blockquote>**➻ Hello, {mention}
+
+🥀 I am An ≽ Advanced ≽ High Quality
+Bot, I Can Stream 🌿 Audio & Video In
+Your ♚ Channel And Group.
+
+🐬 Must Click ❥ Open Command List
+Button ⋟ To Get More Info's 🦋 About
+My All Commands.
+
+💐 Feel Free ≽ To Use Me › And Share
 With Your ☛ Other Friends.**</blockquote>"""
         parse_mode=ParseMode.HTML,
         buttons = InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        text="Add Google Music",
+                        text="🥀 Add Me In Your Chat ✨",
                         url=f"https://t.me/{bot.me.username}?startgroup=true",
                     )
                 ],
                 [
                     InlineKeyboardButton(
-                        text="Play Guidelines ",
+                        text="🌺 Open Command List 🌷",
                         callback_data="open_command_list",
                     )
                 ],
@@ -411,13 +417,18 @@ With Your ☛ Other Friends.**</blockquote>"""
 
 @bot.on_callback_query(rgx("open_command_list"))
 async def open_command_list_alert(client, query):
-    caption = """<blockquote><b>Hello, {mention}</b>
-<b>This Music Player Has Been Launched By Google In 𝟮𝟬𝟮𝟱.
-This Music Player Is Made With All Update Version Modules
-So That Telegram Users Do Not Face Any Problem.
-\n\n 𝗖𝗿𝗲𝗱𝗶𝘁 ➠ jiosaavn_robot.t.me \n\n</b></blockquote>
-With Your ☛ Other Friends.**</blockquote>"""
-    parse_mode=ParseMode.HTML,
+    caption = """**🥀 All Members Can Use:**
+/play - Stream Only Audio On VC.
+/vplay - Stream Audio With Video.
+
+**👾 Only For Chat Admins:**
+/pause - Pause Running Stream.
+/resume - Resume Paused Stream.
+/skip - Skip Current Stream To Next.
+/end - Stop Current Running Stream.
+
+**Note:** All Commands Will Work
+Only in Channels/Groups."""
     buttons = InlineKeyboardMarkup(
         [
             [
@@ -438,24 +449,29 @@ With Your ☛ Other Friends.**</blockquote>"""
 @bot.on_callback_query(rgx("back_to_home"))
 async def back_to_home_menu(client, query):
     mention = query.from_user.mention
-    caption = f"""<blockquote><b>Hello, {mention}</b>
-<b>This Music Player Has Been Launched By Google In 𝟮𝟬𝟮𝟱.
-This Music Player Is Made With All Update Version Modules
-So That Telegram Users Do Not Face Any Problem.
-\n\n 𝗖𝗿𝗲𝗱𝗶𝘁 ➠ jiosaavn_robot.t.me \n\n</b></blockquote>
-With Your ☛ Other Friends.**</blockquote>"""
-    parse_mode=ParseMode.HTML,
+    caption = f"""**➻ Hello, {mention}
+
+🥀 I am An ≽ Advanced ≽ High Quality
+Bot, I Can Stream 🌿 Audio & Video In
+Your ♚ Channel And Group.
+
+🐬 Must Click ❥ Open Command List
+Button ⋟ To Get More Info's 🦋 About
+My All Commands.
+
+💐 Feel Free ≽ To Use Me › And Share
+With Your ☛ Other Friends.**"""
     buttons = InlineKeyboardMarkup(
         [
             [
                 InlineKeyboardButton(
-                    text="Add Google Music",
+                    text="🥀 Add Me In Your Chat ✨",
                     url=f"https://t.me/{bot.me.username}?startgroup=true",
                 )
             ],
             [
                 InlineKeyboardButton(
-                    text="Play Guidelines ",
+                    text="🌺 Open Command List 🌷",
                     callback_data="open_command_list",
                 )
             ],
@@ -758,7 +774,6 @@ async def stream_logger(
 **🌺 Chat Name:** {chat_name}
 **🌼 Chat Link:** {chat_link}
 **👾 Requested By:** {requested_by}"""
-                
             try:
                 await bot.send_photo(LOG_GROUP_ID, photo=thumbnail, caption=caption)
             except Exception:
@@ -818,8 +833,6 @@ async def change_stream(chat_id):
 **🐬 Duration:** {duration}
 **🦋 Stream Type:** {stream_type}
 **👾 Requested By:** {requested_by}"""
-    # caption = f"""<blockquote>\n𝗚𝗼𝗼𝗴𝗹𝗲 𝗠𝘂𝘀𝗶𝗰 𝗣𝗿𝗼𝘃𝗶𝗱𝗲𝘀 𝗦𝗶𝗺𝗽𝗹𝗲 𝗮𝗻𝗱 𝗖𝗼𝗼𝗹 𝗜𝗻𝘁𝗲𝗿𝗳𝗮𝗰𝗲 𝘄𝗶𝘁𝗵 𝗛𝗶𝗴𝗵 𝗤𝘂𝗮𝗹𝗶𝘁𝘆 𝗦𝗼𝘂𝗻𝗱𝘀.<b> /skip</b><b>  /stop</b><b>  /setting</b></blockquote>"""
-    # parse_mode=ParseMode.HTML,
     buttons = InlineKeyboardMarkup(
         [
             [
@@ -876,20 +889,20 @@ async def stream_audio_or_video(client, message):
     audio = (replied.audio or replied.voice) if replied else None
     video = (replied.video or replied.document) if replied else None
     stickers = [
-        "wait....",
-        "wait for .....",
-        # "🎉",
-        # "🎃",
-        # "💥",
-        # "🦋",
-        # "🕊️",
-        # "❤️",
-        # "💖",
-        # "💝",
-        # "💗",
-        # "💓",
-        # "💘",
-        # "💞",
+        "🌹",
+        "🌺",
+        "🎉",
+        "🎃",
+        "💥",
+        "🦋",
+        "🕊️",
+        "❤️",
+        "💖",
+        "💝",
+        "💗",
+        "💓",
+        "💘",
+        "💞",
     ]
     aux = await message.reply_text(random.choice(stickers))
     if audio:
